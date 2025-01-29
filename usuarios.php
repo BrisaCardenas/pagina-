@@ -14,7 +14,7 @@ include 'db.php';
   
 </head>
 <body>
-
+<!-- añadir datos-->
 <div class="main-container">
     <div class="edit-form">
         <form action="update.php" method="POST">
@@ -35,8 +35,8 @@ include 'db.php';
         <h1>Personas JX</h1>
         <ul>
             <?php
-            // Consulta para la tabla de usuarios
-            $sql = "SELECT Nombre, Correo FROM usuario";
+            // Consulta usuarios
+            $sql = "SELECT Nombre, Correo FROM usuario ORDER BY Nombre ASC"; 
             $result = $conn->query($sql);
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {

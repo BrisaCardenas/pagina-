@@ -1,4 +1,6 @@
-<!-- sidebar.php -->
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
 <div class="sidebar">
     <div class="sidebar-header">
         <div class="logo">JX</div>
@@ -11,6 +13,5 @@
         <li class="menu-item" onclick="location.href='asignaciones.php';">✔ Asignaciones</li>
         <li class="menu-item" onclick="location.href='incidentes.php';">🔨 Incidentes</li>
         <li class="menu-item" onclick="location.href='historial.php';">📕 Historial</li>
-        
     </ul>
 </div>
