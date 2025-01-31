@@ -14,7 +14,26 @@ include 'sidebar.php';
 <body>
 <div class="main-container">
     <div class="user-table">
-        <!-- contenido aquí -->
+        <h1>Asignaciones</h1>
+        <ul>
+            <?php
+            $sql = "SELECT a.id_Asignaciones, u.Nombre AS Usuario, e.Nombre AS Equipo, a.Fecha_entrega 
+                    FROM asignaciones a 
+                    JOIN usuario u ON a.usuario_id_Usuario = u.id_Usuario 
+                    JOIN equipo e ON a.equipo_id_Equipo = e.id_Equipo 
+                    ORDER BY a.Fecha_entrega DESC"; 
+            $result = $conn->query($sql);
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<li>
+                            <strong>" . htmlspecialchars($row['Usuario']) . "</strong> - " . htmlspecialchars($row['Equipo']) . " - " . htmlspecialchars($row['Fecha_entrega']) . "
+                          </li>";
+                }
+            } else {
+                echo "<li>No hay asignaciones registradas.</li>";
+            }
+            ?>
+        </ul>
     </div>
 </div>
 </body>

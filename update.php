@@ -6,8 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $correo = $_POST['correo'];
 
-   
-    $sql = "UPDATE usuario SET Nombre=?, Correo=? WHERE id=?";
+
+    $sql = "UPDATE usuario SET Nombre=?, Correo=? WHERE id_Usuario=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssi", $nombre, $correo, $id);
 
@@ -19,5 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
     $conn->close();
+
+    
+    header("Location: usuarios.php");
+    exit();
 }
-?>
+?>>

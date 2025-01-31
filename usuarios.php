@@ -1,6 +1,11 @@
 <?php
-include 'sidebar.php';
+
 include 'db.php'; 
+include 'sidebar.php'; 
+
+
+$sql = "SELECT id_Usuario, Nombre, Correo FROM usuario ORDER BY Nombre ASC"; 
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -11,36 +16,35 @@ include 'db.php';
     <title>Personas JX</title>
     <link rel="stylesheet" href="usuarios.css">
     <link rel="stylesheet" href="style2.css">
-  
 </head>
 <body>
-<!-- añadir datos-->
-<div class="main-container">
+
+
+<div class="main-container"> 
     <div class="edit-form">
-        <form action="update.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+        <form action="update.php" method="POST"> 
+
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($row['Nombre']); ?>" required>
+            <input type="text" id="nombre" name="nombre" required>
             
             <label for="correo">Correo:</label>
-            <input type="email" id="correo" name="correo" value="<?php echo htmlspecialchars($row['Correo']); ?>" required>
+            <input type="email" id="correo" name="correo" required>
              
-            <button type="submit" class="btn-update">Actualizar</button>
-            <button type="button" class="btn-delete" onclick="deleteUser(<?php echo $row['id']; ?>)">Eliminar</button>
+            <button type="submit" class="btn-update">Agregar Usuario</button>
         </form>
-        
+
     </div>
     
     <div class="user-table">
         <h1>Personas JX</h1>
         <ul>
             <?php
-            // Consulta usuarios
-            $sql = "SELECT Nombre, Correo FROM usuario ORDER BY Nombre ASC"; 
-            $result = $conn->query($sql);
+            
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<li>" . htmlspecialchars($row['Nombre']) . " - " . htmlspecialchars($row['Correo']) . "</li>";
+                    echo "<li>
+                            <strong>" . htmlspecialchars($row['Nombre']) . "</strong> - " . htmlspecialchars($row['Correo']) . "
+                          </li>";
                 }
             } else {
                 echo "<li>No hay usuarios.</li>";
@@ -48,6 +52,4 @@ include 'db.php';
             ?>
         </ul>
     </div>
-</div>
-</body>
-</html>
+</div> 
