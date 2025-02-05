@@ -2,7 +2,6 @@
 include 'db.php'; 
 include 'sidebar.php';
 
-
 $searchTerm = '';
 $searchResults = [];
 

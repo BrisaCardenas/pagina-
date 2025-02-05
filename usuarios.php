@@ -1,10 +1,11 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 include 'db.php'; 
 include 'sidebar.php'; 
 
-
-$sql = "SELECT id_Usuario, Nombre, Correo FROM usuario ORDER BY Nombre ASC"; 
+$sql = "SELECT Nombre, Correo FROM usuario ORDER BY Nombre ASC"; 
 $result = $conn->query($sql);
 ?>
 
@@ -23,7 +24,6 @@ $result = $conn->query($sql);
 <div class="main-container"> 
     <div class="edit-form">
         <form action="update.php" method="POST"> 
-
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
             
@@ -39,7 +39,7 @@ $result = $conn->query($sql);
         <h1>Personas JX</h1>
         <ul>
             <?php
-            
+
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo "<li>
@@ -53,3 +53,5 @@ $result = $conn->query($sql);
         </ul>
     </div>
 </div> 
+</body>
+</html>

@@ -1,10 +1,13 @@
- * {
+ /*tengo que arreglar el orden de esto */
+                                          
+ 
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
-/* Estilos generales */
+
 body {
   display: flex;
 }
@@ -16,46 +19,43 @@ body {
   display: flex;
   flex-direction: column;
   border-right: 1px solid #ddd;
-  transition: width 0.3s; /* Transición suave para el cambio de tamaño */
+  transition: width 0.3s;
 }
 
-/* Estilos para pantallas pequeñas */
 @media (max-width: 768px) {
   .sidebar {
-      width: 60px; /* Ancho reducido en pantallas pequeñas */
+      width: 60px; 
   }
 
   .sidebar-header {
-      justify-content: center; /* Centrar el logo */
+      justify-content: center;
   }
 
   .title {
-      display: none; /* Ocultar el título en pantallas pequeñas */
+      display: none; 
   }
 
   .menu-item {
-      justify-content: center; /* Centrar los elementos del menú */
+      justify-content: center; 
   }
 }
 
-/* Estilos para pantallas muy pequeñas */
 @media (max-width: 480px) {
   .sidebar {
-      width: 50px; /* Ancho aún más reducido */
+      width: 50px;
   }
 
   .menu-item {
-      font-size: 12px; /* Reducir el tamaño de fuente */
+      font-size: 12px; 
   }
 }
 
-/* Estilos para la clase colapsada */
 .sidebar.collapsed {
-  width: 60px; /* Ancho colapsado */
+  width: 60px; 
 }
 
 .sidebar.collapsed .title {
-  display: none; /* Ocultar el título */
+  display: none; 
 }
 
 .main-container {
@@ -99,7 +99,25 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
-  }
+}
+
+.menu-text {
+    display: inline-block;
+    transition: opacity 0.3s;
+}
+
+.sidebar.collapsed .menu-text {
+    opacity: 0; 
+    width: 0;
+    overflow: hidden;
+}
+
+.sidebar.collapsed .menu-item::before {
+    content: attr(data-first-char);
+    display: inline-block;
+    width: 20px; 
+    margin-right: 5px; 
+}
   
   .menu-item:hover {
     background-color: #00ada9; 
@@ -114,7 +132,7 @@ body {
 
 
 
-/*Informacion tablas */
+
 * {
   margin: 0;
   padding: 0;
