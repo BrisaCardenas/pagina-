@@ -109,12 +109,12 @@ body {
     padding: 0;
 }
 textarea {
-    width: 100%; /* Asegura que el textarea ocupe todo el ancho disponible */
-    height: 100px; /* Ajusta la altura según sea necesario */
-    padding: 8px; /* Espaciado interno */
-    border: 1px solid #bdc3c7; /* Borde */
-    border-radius: 4px; /* Bordes redondeados */
-    resize: vertical; /* Permite cambiar el tamaño verticalmente */
+    width: 100%;
+    height: 100px;
+    padding: 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    resize: vertical;
 }
 
 

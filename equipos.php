@@ -23,7 +23,7 @@ $result = $conn->query($sql);
             const currentLength = descriptionField.value.length;
             characterCount.textContent = `${currentLength} / ${maxLength}`;
 
-            // Cambiar el color del contador si se excede el límite
+            // Cambiar el color
             if (currentLength > maxLength) {
                 characterCount.style.color = 'red';
             } else {

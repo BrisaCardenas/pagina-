@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssss", $nombre, $tipo_equipo, $estado, $descripcion);
 
         if ($stmt->execute()) {
-            echo "Equipo agregado correctamente.";
+            header("Location: equipos.php");
         } else {
             echo "Error al agregar el equipo: " . $stmt->error;
         }
