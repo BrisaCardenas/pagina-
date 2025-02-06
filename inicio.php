@@ -44,55 +44,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
+    <link rel="stylesheet" href="inicio.css">
     <link rel="stylesheet" href="style2.css">
 </head>
 <body>
 
 <div class="main-container">
-    <h1>Buscar Información</h1>
-    <form action="" method="POST">
+    <form action="" method="POST" class="search-form">
         <input type="text" name="searchTerm" placeholder="Buscar..." value="<?php echo htmlspecialchars($searchTerm); ?>" required>
         <button type="submit">Buscar</button>
     </form>
-
-    <h2>Resultados de Equipos</h2>
-    <ul>
-        <?php 
-        if (isset($searchResults['equipos']) && $searchResults['equipos']->num_rows > 0) {
-            while ($row = $searchResults['equipos']->fetch_assoc()) {
-                echo "<li>" . htmlspecialchars($row['Nombre']) . " - " . htmlspecialchars($row['Estado']) . "</li>";
+    <img src="ruta/a/tu/imagen.jpg" alt="Descripción de la imagen" class="search-image">
+    
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+        <h2>Resultados de Equipos</h2>
+        <ul>
+            <?php 
+            if (isset($searchResults['equipos']) && $searchResults['equipos']->num_rows > 0) {
+                while ($row = $searchResults['equipos']->fetch_assoc()) {
+                    echo "<li>" . htmlspecialchars($row['Nombre']) . " - " . htmlspecialchars($row['Estado']) . "</li>";
+                }
+            } else {
+                echo "<li>No se encontraron equipos.</li>";
             }
-        } else {
-            echo "<li>No se encontraron equipos.</li>";
-        }
-        ?>
-    </ul>
+            ?>
+        </ul>
 
-    <h2>Resultados de Historial</h2>
-    <ul>
-        <?php
-        if (isset($searchResults['historial']) && $searchResults['historial']->num_rows > 0) {
-            while ($row = $searchResults['historial']->fetch_assoc()) {
-                echo "<li>" . htmlspecialchars($row['Usuario']) . " - " . htmlspecialchars($row['Equipo']) . " - " . htmlspecialchars($row['Fecha_devolucion']) . "</li>";
+        <h2>Resultados de Historial</h2>
+        <ul>
+            <?php
+            if (isset($searchResults['historial']) && $searchResults['historial']->num_rows > 0) {
+                while ($row = $searchResults['historial']->fetch_assoc()) {
+                    echo "<li>" . htmlspecialchars($row['Usuario']) . " - " . htmlspecialchars($row['Equipo']) . " - " . htmlspecialchars($row['Fecha_devolucion']) . "</li>";
+                }
+            } else {
+                echo "<li>No se encontraron registros en el historial.</li>";
             }
-        } else {
-            echo "<li>No se encontraron registros en el historial.</li>";
-        }
-        ?>
-    </ul>
+            ?>
+        </ul>
 
-    <h2>Resultados de Incidentes</h2>
-    <ul>
-        <?php
-        if (isset($searchResults['incidentes']) && $searchResults['incidentes']->num_rows > 0) {
-            while ($row = $searchResults['incidentes']->fetch_assoc()) {
-                echo "<li>" . htmlspecialchars($row['Descripcion_suceso']) . " - " . htmlspecialchars($row['Usuario']) . " - " . htmlspecialchars($row['Equipo']) . " - " . htmlspecialchars($row['Fecha']) . "</li>";
+        <h2>Resultados de Incidentes</h2>
+        <ul>
+            <?php
+            if (isset($searchResults['incidentes']) && $searchResults['incidentes']->num_rows > 0) {
+                while ($row = $searchResults['incidentes']->fetch_assoc()) {
+                    echo "<li>" . htmlspecialchars($row['Descripcion_suceso']) . " - " . htmlspecialchars($row['Usuario']) . " - " . htmlspecialchars($row['Equipo']) . " - " . htmlspecialchars($row['Fecha']) . "</li>";
+                }
+            } else {
+                echo "<li>No se encontraron incidentes.</li>";
             }
-        } else {
-            echo "<li>No se encontraron incidentes.</li>";
-        }
-        ?>
-    </ul>
+            ?>
+        </ul>
+    <?php endif; ?>
 </div>
 
 </body>

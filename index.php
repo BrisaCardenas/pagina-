@@ -32,11 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="fotojx.png" type="image/x-icon"> <!-- Cambia la ruta aquí -->
 </head>
 <body>
 
 <div class="login-container">
-    <div class="logo">JX</div>
+    <div class="logo">
+        <img src="fotojx.png" alt="Logo" style="width: 60px; height: 60px; object-fit: cover;">
+    </div>
     <h1>Por favor, inicia sesión</h1>
 
     <?php if (isset($error_message)) echo "<p class='error-message'>$error_message</p>"; ?>
