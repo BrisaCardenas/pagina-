@@ -18,12 +18,12 @@ $result = $conn->query($sql);
         function updateCharacterCount() {
             const descriptionField = document.getElementById('descripcion');
             const characterCount = document.getElementById('characterCount');
-            const maxLength = 100; // Límite de caracteres
+            const maxLength = 100; 
 
             const currentLength = descriptionField.value.length;
             characterCount.textContent = `${currentLength} / ${maxLength}`;
 
-            // Cambiar el color
+          
             if (currentLength > maxLength) {
                 characterCount.style.color = 'red';
             } else {

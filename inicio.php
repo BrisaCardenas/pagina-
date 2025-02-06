@@ -46,15 +46,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Inicio</title>
     <link rel="stylesheet" href="inicio.css">
     <link rel="stylesheet" href="style2.css">
+    <style>
+        .search-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+    </style>
 </head>
-<body>
+<body> 
 
 <div class="main-container">
     <form action="" method="POST" class="search-form">
         <input type="text" name="searchTerm" placeholder="Buscar..." value="<?php echo htmlspecialchars($searchTerm); ?>" required>
         <button type="submit">Buscar</button>
     </form>
-    <img src="ruta/a/tu/imagen.jpg" alt="Descripción de la imagen" class="search-image">
+    
+
+    <img src="bu.jpng" alt="Descripción de la imagen" class="search-image">
     
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
         <h2>Resultados de Equipos</h2>

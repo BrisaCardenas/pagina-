@@ -36,7 +36,7 @@
     </div>
 
     <div class="main-content">
-        <!-- Contenido principal aquí -->
+        <!-- Contenido principal aquí jijij -->
     </div>
     <button class="toggle-button" onclick="toggleSidebar()">☰</button> 
 </body>
