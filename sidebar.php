@@ -11,7 +11,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="logo">
-            <img src="fotojx2.png" alt="Logo" style="width: 30px; height: 30px; object-fit: cover;">
+                <img src="fotojx2.png" alt="Logo" style="width: 30px; height: 30px; object-fit: cover;">
             </div>
             <span class="title">JX Gestion</span>
         </div>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="main-content">
-        <!-- Contenido principal aquí jijij -->
+        <!-- Contenido principal aquí -->
     </div>
     <button class="toggle-button" onclick="toggleSidebar()">☰</button> 
 </body>
