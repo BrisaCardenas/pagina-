@@ -2,39 +2,79 @@
 include 'db.php'; 
 include 'sidebar.php'; 
 
-// mensaje
 $message = "";
 
-
-$sqlUsuarios = "SELECT id_Usuario, Nombre FROM usuario ORDER BY Nombre ASC"; 
-$resultUsuarios = $conn->query($sqlUsuarios);
-
-$sqlEquipos = "SELECT id_Equipo, Nombre FROM equipo ORDER BY Nombre ASC"; 
-$resultEquipos = $conn->query($sqlEquipos);
-
-// inserción de datos
+// Manejo de inserción de datos
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usuario_id = $_POST['usuario_id'];
-    $equipo_id = $_POST['equipo_id'];
-    $fecha_entrega = date('Y-m-d H:i:s');
+    // Manejo de inserción de asignaciones
+    if (isset($_POST['usuario_id']) && isset($_POST['equipo_id'])) {
+        $usuario_id = $_POST['usuario_id'];
+        $equipo_id = $_POST['equipo_id'];
+        $fecha_entrega = date('Y-m-d H:i:s');
 
-    if (!empty($usuario_id) && !empty($equipo_id)) {
-        $sqlInsert = "INSERT INTO asignaciones (usuario_id_Usuario, equipo_id_Equipo, Fecha_entrega) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($sqlInsert);
-        $stmt->bind_param("iis", $usuario_id, $equipo_id, $fecha_entrega);
+        $sqlCheck = "SELECT * FROM asignaciones WHERE equipo_id_Equipo = ?";
+        $stmtCheck = $conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("i", $equipo_id);
+        $stmtCheck->execute();
+        $resultCheck = $stmtCheck->get_result();
 
-        if ($stmt->execute()) {
-            $message = "Asignación creada correctamente.";
+        if ($resultCheck->num_rows > 0) {
+            $message = "Error: El equipo ya está asignado a otro usuario.";
         } else {
-            $message = "Error al crear la asignación: " . $stmt->error;
+            if (!empty($usuario_id) && !empty($equipo_id)) {
+                $sqlInsert = "INSERT INTO asignaciones (usuario_id_Usuario, equipo_id_Equipo, Fecha_entrega) VALUES (?, ?, ?)";
+                $stmt = $conn->prepare($sqlInsert);
+                $stmt->bind_param("iis", $usuario_id, $equipo_id, $fecha_entrega);
+
+                if ($stmt->execute()) {
+                    $message = "Asignación creada correctamente.";
+                } else {
+                    $message = "Error al crear la asignación: " . $stmt->error;
+                }
+
+                $stmt->close();
+            } else {
+                $message = "Por favor, complete todos los campos.";
+            }
         }
 
-        $stmt->close();
-    } else {
-        $message = "Por favor, complete todos los campos.";
+        $stmtCheck->close();
+    }
+
+    // Manejo de eliminación de asignación
+    if (isset($_POST['terminate_id'])) {
+        $terminate_id = $_POST['terminate_id'];
+        $fecha_termino = date('Y-m-d H:i:s');
+
+        // Actualizar la asignación a terminada
+        $sqlUpdate = "UPDATE asignaciones SET Fecha_devolucion = ? WHERE id_Asignaciones = ?";
+        $stmtUpdate = $conn->prepare($sqlUpdate);
+        $stmtUpdate->bind_param("si", $fecha_termino, $terminate_id);
+
+        if ($stmtUpdate->execute()) {
+            $message = "Asignación terminada correctamente.";
+            
+            // Guardar en el historial
+            $sqlHistorial = "INSERT INTO historial (usuario_id_Usuario, equipo_id_Equipo, Fecha_devolucion) 
+                             SELECT usuario_id_Usuario, equipo_id_Equipo, ? FROM asignaciones WHERE id_Asignaciones = ?";
+            $stmtHistorial = $conn->prepare($sqlHistorial);
+            $stmtHistorial->bind_param("si", $fecha_termino, $terminate_id);
+            $stmtHistorial->execute();
+            $stmtHistorial->close();
+        } else {
+            $message = "Error al terminar la asignación: " . $stmtUpdate->error;
+        }
+
+        $stmtUpdate->close();
     }
 }
 
+// Código para mostrar asignaciones
+$sqlUsuarios = "SELECT id_Usuario, Nombre FROM usuario ORDER BY Nombre ASC"; 
+$resultUsuarios = $conn->query($sqlUsuarios);
+
+$sqlEquipos = "SELECT id_Equipo, Nombre FROM equipo WHERE Estado IN ('nuevo', 'Buen estado') ORDER BY Nombre ASC"; 
+$resultEquipos = $conn->query($sqlEquipos);
 
 $sqlAsignaciones = "SELECT a.id_Asignaciones, u.Nombre AS Usuario, e.Nombre AS Equipo, a.Fecha_entrega 
                     FROM asignaciones a 
@@ -90,6 +130,10 @@ $resultAsignaciones = $conn->query($sqlAsignaciones);
                 while ($row = $resultAsignaciones->fetch_assoc()) {
                     echo "<li>
                             <strong>" . htmlspecialchars($row['Usuario']) . "</strong> - " . htmlspecialchars($row['Equipo']) . " - " . htmlspecialchars($row['Fecha_entrega']) . "
+                            <form action='' method='POST' style='display:inline;'>
+                                <input type='hidden' name='terminate_id' value='" . $row['id_Asignaciones'] . "'>
+                                <button type='submit' onclick='return confirm(\"¿Estás seguro de que deseas terminar esta asignación?\");' class='btn-delete'>Terminar Asignación</button>
+                            </form>
                           </li>";
                 }
             } else {
@@ -99,3 +143,5 @@ $resultAsignaciones = $conn->query($sqlAsignaciones);
         </ul>
     </div>
 </div>
+</body>
+</html>

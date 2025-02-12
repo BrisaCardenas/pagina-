@@ -46,13 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Inicio</title>
     <link rel="stylesheet" href="inicio.css">
     <link rel="stylesheet" href="style2.css">
-    <style>
-        .search-image {
-            max-width: 100%;
-            height: auto;
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body> 
 

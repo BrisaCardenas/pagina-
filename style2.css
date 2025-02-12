@@ -13,23 +13,13 @@ body {
 }
 
 .sidebar {
-  position: fixed; /* Fija la barra lateral */
-  top: 0; /* Alinea la barra lateral en la parte superior */
-  left: 0; /* Alinea la barra lateral a la izquierda */
-  width: 250px; /* Ancho de la barra lateral */
-  height: 100vh; /* Altura completa de la ventana */
-  background-color: #f8f9fa; /* Color de fondo */
+  width: 250px; 
+  height: 100vh; 
+  background-color: #f8f9fa;
   display: flex;
   flex-direction: column;
   border-right: 1px solid #ddd;
   transition: width 0.3s;
-  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es más alto que la ventana */
-}
-
-.main-content {
-  margin-left: 250px; /* Deja espacio para la barra lateral */
-  padding: 20px; /* Espaciado interno */
-  flex: 1; /* Permite que el contenido principal ocupe el espacio restante */
 }
 
 @media (max-width: 768px) {
@@ -66,6 +56,11 @@ body {
 
 .sidebar.collapsed .title {
   display: none; 
+}
+
+.main-container {
+  flex: 1; 
+  padding: 20px; 
 }
   
   .sidebar-header {

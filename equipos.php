@@ -46,7 +46,7 @@ $result = $conn->query($sql);
             <select id="estado" name="estado" required>
                 <option value="">Seleccione un estado</option>
                 <option value="nuevo">Nuevo</option>
-                <option value="usado">Usado</option>
+                <option value="usado">Buen estado</option>
                 <option value="dañado">Dañado</option>
                 <option value="en reparacion">En reparación</option>
             </select>

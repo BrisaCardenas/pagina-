@@ -7,6 +7,46 @@ include 'sidebar.php';
 
 $sql = "SELECT Nombre, Correo FROM usuario ORDER BY Nombre ASC"; 
 $result = $conn->query($sql);
+
+
+$message = "";
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST['nombre'];
+    $correo = $_POST['correo'];
+
+    if (!empty($nombre) && !empty($correo)) {
+        
+        $sqlCheck = "SELECT * FROM usuario WHERE Correo = ?";
+        $stmtCheck = $conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("s", $correo);
+        $stmtCheck->execute();
+        $resultCheck = $stmtCheck->get_result();
+
+        if ($resultCheck->num_rows > 0) {
+            $message = "Error: El correo electrónico ya está en uso. Por favor, elige otro.";
+        } else {
+            
+            $sqlInsert = "INSERT INTO usuario (Nombre, Correo) VALUES (?, ?)";
+            $stmtInsert = $conn->prepare($sqlInsert);
+            $stmtInsert->bind_param("ss", $nombre, $correo);
+
+            if ($stmtInsert->execute()) {
+                $message = "Usuario agregado correctamente.";
+            } else {
+                $message = "Error al agregar el usuario: " . $stmtInsert->error;
+            }
+
+            $stmtInsert->close();
+        }
+
+        $stmtCheck->close();
+    } else {
+        $message = "Por favor, complete todos los campos.";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +63,13 @@ $result = $conn->query($sql);
 
 <div class="main-container"> 
     <div class="edit-form">
-        <form action="update.php" method="POST"> 
+        <?php if (!empty($message)): ?>
+            <div class="alert">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
+        
+        <form action="" method="POST"> 
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
             
@@ -39,7 +85,7 @@ $result = $conn->query($sql);
         <h1>Personas JX</h1>
         <ul>
             <?php
-
+            
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo "<li>
